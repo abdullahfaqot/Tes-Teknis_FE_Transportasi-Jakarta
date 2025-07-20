@@ -1,74 +1,66 @@
 <<<<<<< HEAD
-# Tes-Teknis_FE_Transportasi-Jakarta
-=======
-# Getting Started with Create React App
+# Tes Teknis Frontend - Transportasi Jakarta
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplikasi frontend berbasis ReactJS untuk menampilkan daftar kendaraan real-time dari MBTA (Massachusetts Bay Transportation Authority) dengan deskripsi proyek mengembangkan aplikasi frontend untuk Sistem Manajemen Armada . Aplikasi ini dilengkapi dengan fitur filter berdasarkan rute dan trip, serta visualisasi lokasi kendaraan menggunakan peta interaktif.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Teknologi yang Digunakan
 
-### `npm start`
+- **ReactJS** – Framework utama frontend
+- **TailwindCSS** – Styling UI responsif dan modern
+- **React Select & AsyncSelect** – Dropdown dengan fitur pencarian dan multi-select
+- **Leaflet & React-Leaflet** – Menampilkan lokasi kendaraan di peta
+- **Framer Motion** – Animasi untuk popup detail kendaraan
+- **MBTA API** – Data kendaraan real-time: https://api-v3.mbta.com
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 Cara Menjalankan Aplikasi
 
-### `npm test`
+1. **Clone repository ini**
+   ```bash
+   git clone https://github.com/abdullahfaqot/Tes-Teknis_FE_Transportasi-Jakarta.git
+   cd Tes-Teknis_FE_Transportasi-Jakarta
+2. **Install dependencied**
+   " npm install"
+3. **Jalankan Aplikasi**
+   " npm start "
+4. **Buka di Browser**
+   " http://localhost:3000 "   
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Struktur Aplikasi
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Aplikasi ini terdiri dari satu komponen utama VechileList yang mencakup:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Filter Route dan Trip
+   - Data route diambil dari endpoint routes MBTA 
+   - Setelah memilih route app memuat trip dari kendaraan aktif di route tersebut.
+   - Menggunakan react-select untuk route dan AsyncSelect untuk trip.
+2. Daftar Kendaraan
+   - Data kendaraan diambil berdasarkan filter route dan trip.
+   - Ditampilkan dalam bentuk card responsif.
+   - Setiap card bisa diklik untuk melihat detail kendaraan.
+3. Detail Kendaraan   
+   - Menampilkan info: label, status, latitude, longitude, route ID, trip ID, waktu update, kecepatan, arah.
+   - Menampilkan lokasi kendaraan di peta (Leaflet) dan link ke Google Maps.
+4. Pagination & Limit
+   - Pengguna bisa memilih jumlah data per halaman.
+   - Navigasi halaman disediakan (page 1–5).
 
-### `npm run eject`
+## Notes
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   - Filtering trip hanya menampilkan trip unik menggunakan Set().
+   - Jumlah kendaraan tergantung kondisi real-time di MBTA.
+   - Waktu tampil dalam format lokal (Indonesia).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Dev 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Abdullah 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Github: @abdullahfaqot
 
-## Learn More
+        
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> 1831e14 (Initialize project using Create React App)
