@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Tes Teknis Frontend - Transportasi Jakarta
 
 Aplikasi frontend berbasis ReactJS untuk menampilkan Vehicle Live Tracker dari MBTA (Massachusetts Bay Transportation Authority) dengan deskripsi proyek mengembangkan aplikasi frontend untuk Sistem Manajemen Armada . Aplikasi ini dilengkapi dengan fitur filter berdasarkan rute dan trip, serta visualisasi lokasi kendaraan menggunakan peta interaktif.
