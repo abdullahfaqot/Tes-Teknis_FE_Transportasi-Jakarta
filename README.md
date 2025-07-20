@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 # Tes Teknis Frontend - Transportasi Jakarta
 
-Aplikasi frontend berbasis ReactJS untuk menampilkan daftar kendaraan real-time dari MBTA (Massachusetts Bay Transportation Authority) dengan deskripsi proyek mengembangkan aplikasi frontend untuk Sistem Manajemen Armada . Aplikasi ini dilengkapi dengan fitur filter berdasarkan rute dan trip, serta visualisasi lokasi kendaraan menggunakan peta interaktif.
+Aplikasi frontend berbasis ReactJS untuk menampilkan Vehicle Live Tracker dari MBTA (Massachusetts Bay Transportation Authority) dengan deskripsi proyek mengembangkan aplikasi frontend untuk Sistem Manajemen Armada . Aplikasi ini dilengkapi dengan fitur filter berdasarkan rute dan trip, serta visualisasi lokasi kendaraan menggunakan peta interaktif.
 
 ---
 
@@ -14,16 +14,30 @@ Aplikasi frontend berbasis ReactJS untuk menampilkan daftar kendaraan real-time 
 - **Framer Motion** – Animasi untuk popup detail kendaraan
 - **MBTA API** – Data kendaraan real-time: https://api-v3.mbta.com
 
+## Fitur Utama
+
+- Filter berdasarkan Route dan Trip
+
+- Detail kendaraan lengkap (lokasi, kecepatan, arah, status)
+
+- Google Maps link langsung ke lokasi kendaraan
+
+- Peta interaktif menggunakan Leaflet
+
+- Tampilan pagination dan popup detail
+
+- Dark Mode toggle
+
 ---
 
-## 🚀 Cara Menjalankan Aplikasi
+## Cara Menjalankan Aplikasi
 
 1. **Clone repository ini**
    ```bash
    git clone https://github.com/abdullahfaqot/Tes-Teknis_FE_Transportasi-Jakarta.git
    cd Tes-Teknis_FE_Transportasi-Jakarta
 2. **Install dependencied**
-   " npm install"
+   " npm install " 
 3. **Jalankan Aplikasi**
    " npm start "
 4. **Buka di Browser**
