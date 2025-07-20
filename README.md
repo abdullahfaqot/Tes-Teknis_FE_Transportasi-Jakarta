@@ -37,9 +37,11 @@ Aplikasi frontend berbasis ReactJS untuk menampilkan Vehicle Live Tracker dari M
    git clone https://github.com/abdullahfaqot/Tes-Teknis_FE_Transportasi-Jakarta.git
    cd Tes-Teknis_FE_Transportasi-Jakarta
 2. **Install dependencied**
-   " npm install " 
+   ```bash
+   npm install  
 3. **Jalankan Aplikasi**
-   " npm start "
+   ```bash
+   npm start 
 4. **Buka di Browser**
    " http://localhost:3000 "   
 
