@@ -19,6 +19,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const VehicleList = () => {
     const [vehicles, setVehicles] = useState([]);
+    const [allVehicles, setAllVehicles] = useState([]);
     const [routes, setRoutes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [limit, setLimit] = useState(10);
@@ -55,17 +56,13 @@ const VehicleList = () => {
                     url += `&filter[trip]=${selectedTrips.join(',')}`;
                 }
 
-                try {
-                    const res = await fetch(url);
-                    const json = await res.json();
-                    allData.push(...(json.data || []));
-                } catch (err) {
-                    console.warn(`⚠️ Gagal ambil kendaraan${route ? ' route ' + route : ''}`, err);
-                }
-
+                const res = await fetch(url);
+                const json = await res.json();
+                allData.push(...(json.data || []));
                 await delay(250);
             }
 
+            setAllVehicles(allData);
             const paged = allData.slice((page - 1) * limit, page * limit);
             setVehicles(paged);
         } catch (err) {
@@ -76,47 +73,40 @@ const VehicleList = () => {
     };
 
     const loadTrips = async () => {
-    if (selectedRoutes.length === 0) return [];
+        if (selectedRoutes.length === 0) return [];
 
-    try {
-        const tripSet = new Set();
-        const tripOptions = [];
+        try {
+            const tripSet = new Set();
+            const tripOptions = [];
 
-        const routesToFetch = selectedRoutes.length > 0 ? selectedRoutes : [null];
+            for (const route of selectedRoutes) {
+                let url = `https://api-v3.mbta.com/vehicles?filter[route]=${route}&page[limit]=100`;
 
-        for (const route of routesToFetch) {
-            let url = 'https://api-v3.mbta.com/vehicles?page[limit]=100';
-            if (route) {
-                url = `https://api-v3.mbta.com/vehicles?filter[route]=${route}&page[limit]=100`;
-            }
+                const res = await fetch(url);
+                const json = await res.json();
 
-            const res = await fetch(url);
-            const json = await res.json();
+                for (const vehicle of json.data) {
+                    const tripId = vehicle.relationships?.trip?.data?.id;
+                    const label = vehicle.attributes?.label || tripId;
 
-            for (const vehicle of json.data) {
-                const tripId = vehicle.relationships?.trip?.data?.id;
-                const label = vehicle.attributes?.label || tripId;
-
-                if (tripId && !tripSet.has(tripId)) {
-                    tripSet.add(tripId);
-                    tripOptions.push({
-                        value: tripId,
-                        label: `Trip ${tripId} (${label})`
-                    });
+                    if (tripId && !tripSet.has(tripId)) {
+                        tripSet.add(tripId);
+                        tripOptions.push({
+                            value: tripId,
+                            label: `Trip ${tripId} (${label})`
+                        });
+                    }
                 }
+
+                await delay(200);
             }
 
-            await delay(200);
+            return tripOptions;
+        } catch (err) {
+            console.error('❌ Gagal load trip:', err);
+            return [];
         }
-
-        return tripOptions;
-    } catch (err) {
-        console.error('❌ Gagal load trip:', err);
-        return [];
-    }
-};
-
-
+    };
 
     const formatDate = (dateStr) => {
         if (!dateStr) return "-";
@@ -137,8 +127,14 @@ const VehicleList = () => {
     }, []);
 
     useEffect(() => {
+        setPage(1);
+    }, [selectedRoutes, selectedTrips]);
+
+    useEffect(() => {
         fetchVehicles();
     }, [selectedRoutes, selectedTrips, page, limit]);
+
+    const totalPages = Math.ceil(allVehicles.length / limit);
 
     const statusColor = (status) => {
         switch (status) {
@@ -151,7 +147,7 @@ const VehicleList = () => {
 
     return (
         <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">🚍 Daftar Kendaraan MBTA</h1>
+            <h1 className="text-2xl font-bold mb-4">🚍 Live Tracker Kendaraan MBTA</h1>
 
             <div className="mb-4">
                 <label className="block font-semibold mb-2">Pilih Route (boleh lebih dari satu):</label>
@@ -260,6 +256,10 @@ const VehicleList = () => {
 
             {loading ? (
                 <div className="text-center">Memuat data kendaraan...</div>
+            ) : vehicles.length === 0 ? (
+                <div className="text-center text-red-600 font-semibold mt-8">
+                    🚫 Tidak ada data kendaraan di halaman ini.
+                </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {vehicles.map(vehicle => (
@@ -279,33 +279,19 @@ const VehicleList = () => {
                 </div>
             )}
 
-            <div className="mb-4 mt-8 flex justify-center items-center">
-                <label className="mr-2 font-medium">Data per halaman:</label>
-                <select
-                    className="border px-2 py-1 rounded"
-                    value={limit}
-                    onChange={(e) => {
-                        setLimit(Number(e.target.value));
-                        setPage(1);
-                    }}
-                >
-                    {[5, 10, 20, 50].map(opt => (
-                        <option key={opt} value={opt}>{opt}</option>
+            {totalPages > 1 && (
+                <div className="mt-6 flex justify-center space-x-2">
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(p => (
+                        <button
+                            key={p}
+                            onClick={() => setPage(p)}
+                            className={`px-4 py-2 border rounded ${page === p ? 'bg-blue-500 text-white' : 'bg-white'}`}
+                        >
+                            {p}
+                        </button>
                     ))}
-                </select>
-            </div>
-
-            <div className="mt-6 flex justify-center space-x-2">
-                {[1, 2, 3, 4, 5].map(p => (
-                    <button
-                        key={p}
-                        onClick={() => setPage(p)}
-                        className={`px-4 py-2 border rounded ${page === p ? 'bg-blue-500 text-white' : 'bg-white'}`}
-                    >
-                        {p}
-                    </button>
-                ))}
-            </div>
+                </div>
+            )}
         </div>
     );
 };
